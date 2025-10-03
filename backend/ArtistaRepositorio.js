@@ -1,4 +1,4 @@
-const { Artista } = require('./models');
+const { Artista } = require('../models');
 
 //CRUD
 

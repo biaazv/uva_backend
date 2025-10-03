@@ -61,6 +61,10 @@ app.delete('/artistas/:id', async (req, res) => {
 
     const artista = await repo.excluirArtista(id)
 
+    if (!artista) {
+      return res.status(404).json({ error: 'Artista não encontrado' });
+    }
+
     res.status(200).json('Artista deletado');
     res.end()
 })
