@@ -1,18 +1,40 @@
 const { Artista } = require('./models');
 
-const obterArtista = async() => {
-    return await Artista.findAll({
-        attributes:['id','nome','data_nascimento','pais']
-    })
-}
+//CRUD
 
-const salvarArtista = async (nome, data_nascimento, pais) => {
+//Create
+const salvarArtista = async (nome, genero,data_nascimento, pais) => {
     const artista = await Artista.create({
-        nome: nome, data_nascimento:data_nascimento, pais:pais
+        nome: nome, genero:genero, data_nascimento:data_nascimento, pais:pais
     });
     return artista
 }
 
+//Read
+const obterArtista = async() => {
+    return await Artista.findAll({
+        attributes:['id','nome','genero','data_nascimento','pais']
+    })
+}
+
+//Update
+const atualizarArtista = async (id, nome, genero, data_nascimento, pais) => {
+  const artista = await Artista.findByPk(id);
+
+  if (!artista) {
+    return null; // não achou artista com esse id
+  }
+
+  artista.nome = nome;
+  artista.genero = genero;
+  artista.data_nascimento = data_nascimento;
+  artista.pais = pais;
+
+  await artista.save();
+  return artista;
+};
+
+//Delete
 const excluirArtista = async(id) => {
     const artista = await Artista.findByPk(id);
     if (artista){
@@ -23,5 +45,6 @@ const excluirArtista = async(id) => {
 module.exports = {
     obterArtista: obterArtista,
     salvarArtista: salvarArtista,
-    excluirArtista: excluirArtista
+    excluirArtista: excluirArtista,
+    atualizarArtista: atualizarArtista,
 }
