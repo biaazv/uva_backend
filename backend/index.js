@@ -1,5 +1,5 @@
 // index.js
-const API = 'http://localhost:3000/produtos';
+const API = 'http://localhost:3000/artistas';
 
 /*Objetivo: Converter o código da categoria salvo no banco (ex.: perifericos, hardware)
 em um rótulo legível para mostrar na tela (ex.: “Periféricos”, “Hardware”).
