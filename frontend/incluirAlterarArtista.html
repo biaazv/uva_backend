@@ -26,7 +26,7 @@
       <h1 class="h3">Cadastro de Artistas</h1>
     </header>
 
-    <form id="produtoForm" class="row g-3" novalidate>
+    <form id="artistaForm" class="row g-3" novalidate>
       <div class="col-12 col-sm-6 col-md-4">
         <label for="nome" class="form-label">Nome do Artista *</label>
         <input type="text" id="nome" name="nome" class="form-control" placeholder="Ex.: Liniker" aria-describedby="err-nome">
@@ -35,7 +35,7 @@
 
       <div class="col-12 col-sm-6 col-md-4">
         <label for="genero" class="form-label">Gênero Musical *</label>
-        <input type="text" id="cnpj" name="cnpj" class="form-control" placeholder="MPB" aria-describedby="err-genero">
+        <input type="text" id="genero" name="genero" class="form-control" placeholder="MPB" aria-describedby="err-genero">
         <span id="err-genero" class="text-danger small d-none"></span>
       </div>
 
@@ -47,10 +47,10 @@
 
       <div class="col-12 col-sm-6 col-md-4">
         <label for="pais" class="form-label">País *</label>
-        <input type="text" id="preco" name="pais" class="form-control" placeholder="Brasil" aria-describedby="err-pais">
+        <input type="text" id="pais" name="pais" class="form-control" placeholder="Brasil" aria-describedby="err-pais">
         <span id="err-pais" class="text-danger small d-none"></span>
       </div>
-     
+
       <div class="col-12">
         <div class="form-check">
           <input class="form-check-input" type="checkbox" id="termos" name="termos" aria-describedby="err-termos">
@@ -71,9 +71,9 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/validacoesMascaras.js"></script>
-  <script src="js/toast.js"></script>
-  <script src="js/produto-api.js"></script>
+  <!-- <script src="js/toast.js"></script> -->
+  <!-- <script src="/backend/produto-api.js"></script> -->
+  <script src="/backend/validacoesMascaras.js"></script>
   
 </body>
 </html>

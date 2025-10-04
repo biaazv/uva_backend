@@ -27,25 +27,25 @@ function campoVazio(value) {
 }
 
 // Função para formatar o valor de preço para validação
-function formatarPrecoParaValidacao(valor) {
-  return valor.replace(/\./g, '').replace(',', '.');
-}
+// function formatarPrecoParaValidacao(valor) {
+//   return valor.replace(/\./g, '').replace(',', '.');
+// }
 
 // =================== Funções de Máscara ===================
 
-function mascaraCNPJ(valor) {
-  return valor.replace(/\D/g, '').replace(/^(\d{2})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/\.(\d{3})(\d)/, '.$1/$2').replace(/(\d{4})(\d)/, '$1-$2').replace(/(-\d{2})\d+?$/, '$1');
-}
+// function mascaraCNPJ(valor) {
+//   return valor.replace(/\D/g, '').replace(/^(\d{2})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/\.(\d{3})(\d)/, '.$1/$2').replace(/(\d{4})(\d)/, '$1-$2').replace(/(-\d{2})\d+?$/, '$1');
+// }
 
-function mascaraPreco(valor) {
-  valor = valor.replace(/\D/g, ''); // mantém apenas dígitos
-  if (valor.length > 2) {
-    valor = valor.replace(/(\d)(\d{2})$/, '$1,$2'); 
-    // aplica pontos de milhar a cada grupo de 3 dígitos antes da vírgula
-    valor = valor.replace(/(?=(\d{3})+(,))/g, '.');
-  }
-  return valor;
-}
+// function mascaraPreco(valor) {
+//   valor = valor.replace(/\D/g, ''); // mantém apenas dígitos
+//   if (valor.length > 2) {
+//     valor = valor.replace(/(\d)(\d{2})$/, '$1,$2'); 
+//     // aplica pontos de milhar a cada grupo de 3 dígitos antes da vírgula
+//     valor = valor.replace(/(?=(\d{3})+(,))/g, '.');
+//   }
+//   return valor;
+// }
 
 function mascaraData(valor) {
   return valor
@@ -59,32 +59,33 @@ function mascaraData(valor) {
 
 // Função principal de validação do formulário
 function validarFormularioHtml(e) {
+  console.log("validando submit")
   e.preventDefault();
 
-  const form = document.getElementById('produtoForm');
+  const form = document.getElementById('artistaForm');
   const nome = document.getElementById('nome');
   const errNome = document.getElementById('err-nome');
 
-  const cnpj = document.getElementById('cnpj');
-  const errCnpj = document.getElementById('err-cnpj');
+  // const cnpj = document.getElementById('cnpj');
+  // const errCnpj = document.getElementById('err-cnpj');
 
-  const categoria = document.getElementById('categoria');
-  const errCategoria = document.getElementById('err-categoria');
+  const genero = document.getElementById('genero');
+  const errGenero = document.getElementById('err-genero');
 
-  const preco = document.getElementById('preco');
-  const errPreco = document.getElementById('err-preco');
+  // const preco = document.getElementById('preco');
+  // const errPreco = document.getElementById('err-preco');
 
-  const quantidade = document.getElementById('quantidade');
-  const errQuantidade = document.getElementById('err-quantidade');
+  // const quantidade = document.getElementById('quantidade');
+  // const errQuantidade = document.getElementById('err-quantidade');
 
   const data = document.getElementById('data');
   const errData = document.getElementById('err-data');
 
-  const descricao = document.getElementById('descricao');
-  const errDescricao = document.getElementById('err-descricao');
+  const pais = document.getElementById('pais');
+  const errPais = document.getElementById('err-pais');
 
-  const statusRadios = document.querySelectorAll('input[name="status"]');
-  const errStatus = document.getElementById('err-status');
+  // const statusRadios = document.querySelectorAll('input[name="status"]');
+  // const errStatus = document.getElementById('err-status');
 
   const termos = document.getElementById('termos');
   const errTermos = document.getElementById('err-termos');
@@ -94,44 +95,44 @@ function validarFormularioHtml(e) {
   // ======== VALIDAÇÕES ========
 
   if (campoVazio(nome.value)) {
-    setarErro(nome, errNome, 'Informe o nome do produto.');
+    setarErro(nome, errNome, 'Informe o nome do artista.');
     temErro = true;
   } else {
     limparErro(nome, errNome);
   }
 
-  // Validação do CNPJ
-  if (campoVazio(cnpj.value) || cnpj.value.length !== 18) {
-    setarErro(cnpj, errCnpj, 'Informe um CNPJ válido.');
-    temErro = true;
-  } else {
-    limparErro(cnpj, errCnpj);
-  }
+  // // Validação do CNPJ
+  // if (campoVazio(cnpj.value) || cnpj.value.length !== 18) {
+  //   setarErro(cnpj, errCnpj, 'Informe um CNPJ válido.');
+  //   temErro = true;
+  // } else {
+  //   limparErro(cnpj, errCnpj);
+  // }
 
   
-  if (campoVazio(categoria.value)) {
-    setarErro(categoria, errCategoria, 'Selecione uma categoria.');
+  if (campoVazio(genero.value)) {
+    setarErro(genero, errGenero, 'Informe o gênero.');
     temErro = true;
   } else {
-    limparErro(categoria, errCategoria);
+    limparErro(genero, errGenero);
   }
 
-  // Preço: formata e valida
-  const precoVal = parseFloat(formatarPrecoParaValidacao(preco.value));
-  if (isNaN(precoVal) || precoVal <= 0) {
-    setarErro(preco, errPreco, 'Informe um preço válido (> 0).');
-    temErro = true;
-  } else {
-    limparErro(preco, errPreco);
-  }
+  // // Preço: formata e valida
+  // const precoVal = parseFloat(formatarPrecoParaValidacao(preco.value));
+  // if (isNaN(precoVal) || precoVal <= 0) {
+  //   setarErro(preco, errPreco, 'Informe um preço válido (> 0).');
+  //   temErro = true;
+  // } else {
+  //   limparErro(preco, errPreco);
+  // }
 
-  const qtdVal = parseInt(quantidade.value, 10);
-  if (isNaN(qtdVal) || qtdVal <= 0) {
-    setarErro(quantidade, errQuantidade, 'Informe uma quantidade válida (> 0).');
-    temErro = true;
-  } else {
-    limparErro(quantidade, errQuantidade);
-  }
+  // const qtdVal = parseInt(quantidade.value, 10);
+  // if (isNaN(qtdVal) || qtdVal <= 0) {
+  //   setarErro(quantidade, errQuantidade, 'Informe uma quantidade válida (> 0).');
+  //   temErro = true;
+  // } else {
+  //   limparErro(quantidade, errQuantidade);
+  // }
 
   // Data: valida o formato e a data
   const dataPreenchida = data.value;
@@ -156,20 +157,27 @@ function validarFormularioHtml(e) {
     }
   }
 
-  if (campoVazio(descricao.value) || descricao.value.trim().length < 10) {
-    setarErro(descricao, errDescricao, 'Descreva o produto (mín. 10 caracteres - sem contar espaços).');
+    if (campoVazio(pais.value)) {
+    setarErro(pais, errPais, 'Informe o país do artista.');
     temErro = true;
   } else {
-    limparErro(descricao, errDescricao);
+    limparErro(pais, errPais);
   }
 
-  const statusSelecionado = Array.from(statusRadios).some(r => r.checked);
-  if (!statusSelecionado) {
-    setarErro(statusRadios[0], errStatus, 'Selecione o status do produto.');
-    temErro = true;
-  } else {
-    limparErro(statusRadios[0], errStatus);
-  }
+  // if (campoVazio(descricao.value) || descricao.value.trim().length < 10) {
+  //   setarErro(descricao, errDescricao, 'Descreva o produto (mín. 10 caracteres - sem contar espaços).');
+  //   temErro = true;
+  // } else {
+  //   limparErro(descricao, errDescricao);
+  // }
+
+  // const statusSelecionado = Array.from(statusRadios).some(r => r.checked);
+  // if (!statusSelecionado) {
+  //   setarErro(statusRadios[0], errStatus, 'Selecione o status do produto.');
+  //   temErro = true;
+  // } else {
+  //   limparErro(statusRadios[0], errStatus);
+  // }
 
   if (!termos.checked) {
     setarErro(termos, errTermos, 'É necessário confirmar as informações.');
@@ -276,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
   inicializarMascarasManuais();
   
-  document.getElementById('produtoForm').addEventListener('submit', validarFormularioHtml);
+  document.getElementById('artistaForm').addEventListener('submit', validarFormularioHtml);
   document.getElementById('resetBtn').addEventListener('click', () => {
     document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
     document.querySelectorAll('[id^="err-"]').forEach(span => { 
