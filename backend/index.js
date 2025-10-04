@@ -5,15 +5,15 @@ const API = 'http://localhost:3000/artistas';
 em um rótulo legível para mostrar na tela (ex.: “Periféricos”, “Hardware”).
 */
 function categoriaLabel(valor) {
-  const map = { perifericos: 'Periféricos', hardware: 'Hardware', acessorios: 'Acessórios', outros: 'Outros' };
+  const map = { nome: 'Nome', hardware: 'Hardware', acessorios: 'Acessórios', outros: 'Outros' };
   return map[valor] ?? valor ?? '';
 }
 
 /*Objetivo: Carrega na tabela todos os produtos encontrados.
   Se não houver produtos, exibir mensagem
 */
-async function carregarProdutos() {
-  const tbody = document.querySelector('#gridProdutos tbody');
+async function carregarArtistas() {
+  const tbody = document.querySelector('#gridArtistas tbody');
   const listaVazia = document.getElementById('listaVazia');
   tbody.innerHTML = '';
   try {
@@ -22,26 +22,27 @@ async function carregarProdutos() {
     const resp = await fetch(API);
     
     // recuperar o json do response e jogá-lo em uma lista de objetos (Produto) em JavaScript
-    const listaProdutos = await resp.json();
+    const listaArtistas = await resp.json();
 
-    if (!listaProdutos || listaProdutos.length === 0) {
+    if (!listaArtistas || listaArtistas.length === 0) {
       listaVazia.classList.remove('d-none');
       return;
     }
     listaVazia.classList.add('d-none');
 
-    listaProdutos.forEach(p => {
+    listaArtistas.forEach(p => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${p.id}</td>
         <td>${p.nome ?? ''}</td>
-        <td>${categoriaLabel(p.categoria)}</td>
-        <td>${p.quantidade ?? 0}</td>
+        <td>${p.genero ?? 0}</td>
+        <td>${p.data_nascimento ?? 0}</td>
+        <td>${p.data_nascimento ?? 0}</td>
         <td class="text-end">
           <a class="btn btn-sm btn-outline-secondary me-1" title="Consultar detalhes" href="detalhes.html?id=${p.id}">
             <i class="bi bi-search"></i>
           </a>
-          <a class="btn btn-sm btn-outline-primary me-1" title="Editar" href="incluirAlterar.html?id=${p.id}">
+          <a class="btn btn-sm btn-outline-primary me-1" title="Editar" href="Artista.html?id=${p.id}">
             <i class="bi bi-pencil-square"></i>
           </a>
           <button class="btn btn-sm btn-outline-danger" title="Excluir" data-id="${p.id}">
@@ -63,7 +64,7 @@ async function carregarProdutos() {
           const r = await fetch(`${API}/${id}`, { method: 'DELETE' });
           if (!r.ok) throw new Error();
           showToast('Produto excluído com sucesso.', 'success');
-          carregarProdutos();
+          carregarArtistas();
         } catch {
           showToast('Falha ao excluir produto.', 'danger');
         }
@@ -78,4 +79,4 @@ async function carregarProdutos() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', carregarProdutos);
+document.addEventListener('DOMContentLoaded', carregarArtistas);

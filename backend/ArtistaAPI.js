@@ -1,16 +1,19 @@
-const repo = require('./ArtistaRepositorio')
+const repo = require('./ArtistaRepositorio.js')
+
 const cors = require('cors');
 const express = require('express');
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+const API = 'http://localhost:';
 const port = 3000;
+const artistas = '/artistas'
 
 //CRUD
 
 //Create
-app.post('/artistas', async (req, res) => {
+app.post(`${artistas}`, async (req, res) => {
     const nome = req.body.nome;
     const genero = req.body.genero;
     const data_nascimento = req.body.data_nascimento;
@@ -25,6 +28,19 @@ app.get('/artistas', async (req, res) => {
     const artistas = await repo.obterArtista();
     res.json(artistas);
     res.end();
+})
+
+//Read por Id
+app.get('/artistas/:id', async (req, res) => {
+  const id = req.params.id;
+  const artista = await repo.obterArtistaPorId(id);
+
+  if(!artista){
+    return res.status(404).json({ error: 'Artista não encontrado'});
+  }
+  
+  res.json(artista);
+  res.end();
 })
 
 
@@ -72,3 +88,4 @@ app.delete('/artistas/:id', async (req, res) => {
 app.listen(port, () => {
     console.log(`Servidor executando na porta ${port}`);
 })
+
