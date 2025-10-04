@@ -37,12 +37,12 @@ async function carregarArtistas() {
         <td>${p.nome ?? ''}</td>
         <td>${p.genero ?? 0}</td>
         <td>${p.data_nascimento ?? 0}</td>
-        <td>${p.data_nascimento ?? 0}</td>
+        <td>${p.pais ?? 0}</td>
         <td class="text-end">
           <a class="btn btn-sm btn-outline-secondary me-1" title="Consultar detalhes" href="detalhes.html?id=${p.id}">
             <i class="bi bi-search"></i>
           </a>
-          <a class="btn btn-sm btn-outline-primary me-1" title="Editar" href="Artista.html?id=${p.id}">
+          <a class="btn btn-sm btn-outline-primary me-1" title="Editar" href="incluirAlterarArtista.html?id=${p.id}">
             <i class="bi bi-pencil-square"></i>
           </a>
           <button class="btn btn-sm btn-outline-danger" title="Excluir" data-id="${p.id}">
@@ -60,14 +60,8 @@ async function carregarArtistas() {
       const id = btn.getAttribute('data-id');
 
       if (confirm('Deseja realmente excluir este produto?')) {
-        try {
-          const r = await fetch(`${API}/${id}`, { method: 'DELETE' });
-          if (!r.ok) throw new Error();
-          showToast('Produto excluído com sucesso.', 'success');
-          carregarArtistas();
-        } catch {
-          showToast('Falha ao excluir produto.', 'danger');
-        }
+        console.log(`teste`)
+        // const artista = 
       }
     });
 

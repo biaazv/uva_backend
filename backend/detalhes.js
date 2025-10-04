@@ -29,12 +29,8 @@ async function consultarDetalhesProduto() {
     document.getElementById('p-id').textContent = p.id;
     document.getElementById('p-nome').textContent = p.nome ?? '';
     document.getElementById('p-genero').textContent = p.genero ?? '';
-    // document.getElementById('p-pais').textContent = categoriaLabel(p.categoria);
     document.getElementById('p-pais').textContent = p.pais ?? '';
-    // document.getElementById('p-quantidade').textContent = p.quantidade ?? 0;
     document.getElementById('p-data').textContent = p.data ?? '';
-    // document.getElementById('p-status').textContent = (p.status === 'ativo' ? 'Ativo' : 'Inativo');
-    // document.getElementById('p-descricao').textContent = p.descricao ?? '';
     document.getElementById('btnEditar').href = `incluirAlterar.html?id=${p.id}`;
   } catch (e) {
     console.error(e);

@@ -59,7 +59,6 @@ function mascaraData(valor) {
 
 // Função principal de validação do formulário
 function validarFormularioHtml(e) {
-  console.log("validando submit")
   e.preventDefault();
 
   const form = document.getElementById('artistaForm');
@@ -80,6 +79,8 @@ function validarFormularioHtml(e) {
 
   const data = document.getElementById('data');
   const errData = document.getElementById('err-data');
+  
+  
 
   const pais = document.getElementById('pais');
   const errPais = document.getElementById('err-pais');

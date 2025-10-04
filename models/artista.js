@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Artista.init({
     nome: DataTypes.STRING,
     genero: DataTypes.STRING,
-    data_nascimento: DataTypes.DATE,
+    data_nascimento: DataTypes.DATEONLY,
     pais: DataTypes.STRING,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
