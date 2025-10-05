@@ -136,7 +136,7 @@ function validarFormularioHtml(e) {
   // }
 
   // Data: valida o formato e a data
-  const dataPreenchida = data.value;
+  const dataPreenchida = data_nascimento.value;
   const regexData = /^\d{2}\/\d{2}\/\d{4}$/;
   if (!regexData.test(dataPreenchida)) {
     setarErro(data, errData, 'A data deve estar no formato DD/MM/AAAA.');

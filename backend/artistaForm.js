@@ -1,6 +1,31 @@
 // Artista-api.js
 const API = 'http://localhost:3000/artistas';
 
+// Função para converter do formato brasileiro para o formato do banco de dados (AAAA-MM-DD)
+function converterParaBD(data_input) {
+    if (!data_input) return null;
+    
+    // Supondo que a entrada é DD/MM/AAAA
+    const [dia, mes, ano] = data_input.split('/');
+    
+    // Retorna AAAA-MM-DD
+    return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`; 
+}
+
+// Função para converter do formato do banco de dados (AAAA-MM-DD) para o formato brasileiro (DD/MM/AAAA)
+function converterParaVisualizacao(data_bd) {
+    if (!data_bd) return '';
+    
+    // 1. Remove a parte do tempo ('T00:00:00.000Z'), deixando apenas a data (AAAA-MM-DD)
+    const dataPart = data_bd.split('T')[0];
+    
+    // 2. Divide a string AAAA-MM-DD em partes
+    const [ano, mes, dia] = dataPart.split('-');
+    
+    // 3. Retorna no formato DD/MM/AAAA
+    return `${dia}/${mes}/${ano}`; 
+}
+
 function serializeForm(form) {
   const get = (id) => (document.getElementById(id)?.value ?? '').trim();
   const getRadio = (name) => {
@@ -12,11 +37,8 @@ function serializeForm(form) {
     nome: get('nome'),
     genero: get('genero'),
     pais: get('pais'),
-    // preco: get('preco'),                // mantém string mascarada
-    // quantidade: isNaN(q) ? 0 : q,
-    data: get('data'),
-    // descricao: get('descricao'),
-    // status: getRadio('status')
+    data_nascimento: converterParaBD(get('data_nascimento'))
+
   };
 }
 
@@ -29,12 +51,8 @@ async function carregarParaEdicao(id) {
     document.getElementById('nome').value = a.nome ?? '';
     document.getElementById('genero').value = a.genero ?? '';
     document.getElementById('pais').value = a.pais ?? '';
-    // document.getElementById('preco').value = a.preco ?? '';
-    // document.getElementById('quantidade').value = a.quantidade ?? 0;
-    document.getElementById('data').value = a.data_nascimento ?? '';
-    // document.getElementById('descricao').value = a.descricao ?? '';
-    // if (a.status === 'ativo') document.getElementById('statusAtivo').checked = true;
-    // if (a.status === 'inativo') document.getElementById('statusInativo').checked = true;
+    document.getElementById('data_nascimento').value = converterParaVisualizacao(a.data_nascimento ?? '');
+
   } catch (e) {
     console.error(e);
     showToast('Artista não encontrado para edição.', 'danger');

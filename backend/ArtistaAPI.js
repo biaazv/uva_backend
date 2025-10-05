@@ -1,5 +1,4 @@
 const repo = require('./ArtistaRepositorio.js')
-
 const cors = require('cors');
 const express = require('express');
 const app = express();
@@ -70,10 +69,7 @@ app.put('/artistas/:id', async (req, res) => {
 //Delete
 app.delete('/artistas/:id', async (req, res) => {
     const id = req.params.id; //pega o id da URL
-
-
     const artista = await repo.excluirArtista(id)
-
     res.status(200).json('Artista deletado');
     res.end()
 })

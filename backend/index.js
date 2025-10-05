@@ -9,6 +9,19 @@ function categoriaLabel(valor) {
   return map[valor] ?? valor ?? '';
 }
 
+function converterParaVisualizacao(data_bd) {
+    if (!data_bd) return '';
+    
+    // 1. Remove a parte do tempo ('T00:00:00.000Z'), deixando apenas a data (AAAA-MM-DD)
+    const dataPart = data_bd.split('T')[0];
+    
+    // 2. Divide a string AAAA-MM-DD em partes
+    const [ano, mes, dia] = dataPart.split('-');
+    
+    // 3. Retorna no formato DD/MM/AAAA
+    return `${dia}/${mes}/${ano}`; 
+}
+
 /*Objetivo: Carrega na tabela todos os produtos encontrados.
   Se não houver produtos, exibir mensagem
 */
@@ -36,7 +49,7 @@ async function carregarArtistas() {
         <td>${p.id}</td>
         <td>${p.nome ?? ''}</td>
         <td>${p.genero ?? 0}</td>
-        <td>${p.data_nascimento ?? 0}</td>
+        <td>${converterParaVisualizacao(p.data_nascimento) ?? 0}</td>
         <td>${p.pais ?? 0}</td>
         <td class="text-end">
           <a class="btn btn-sm btn-outline-secondary me-1" title="Consultar detalhes" href="detalhes.html?id=${p.id}">
