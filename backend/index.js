@@ -60,8 +60,30 @@ async function carregarArtistas() {
       const id = btn.getAttribute('data-id');
 
       if (confirm('Deseja realmente excluir este produto?')) {
-        console.log(`teste`)
-        // const artista = 
+        console.log(`deletar`)
+        try {
+            // const resp = await fetch(`${API}/${id}`);
+            const resp = await fetch(`${API}/${id}`, {
+                method: 'DELETE' // Indica que é uma requisição DELETE
+            });
+
+            if (resp.ok) { // Verifica se a requisição foi bem-sucedida (status 200-299)
+                showToast('Artista excluído com sucesso.', 'success');
+                // Recarrega a lista para atualizar a tabela
+                carregarArtistas(); 
+            } else if (resp.status === 404) {
+                showToast('Artista não encontrado.', 'warning');
+            } else {
+                // Tenta ler a mensagem de erro do servidor
+                const errorData = await resp.json().catch(() => ({}));
+                const errorMessage = errorData.error || 'Erro ao excluir artista.';
+                showToast(errorMessage, 'danger');
+            }
+
+        } catch (e) {
+            console.error(e);
+            showToast('Erro de comunicação com o servidor.', 'danger');
+        }
       }
     });
 

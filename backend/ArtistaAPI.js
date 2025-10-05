@@ -70,10 +70,7 @@ app.put('/artistas/:id', async (req, res) => {
 //Delete
 app.delete('/artistas/:id', async (req, res) => {
     const id = req.params.id; //pega o id da URL
-    const nome = req.body.nome;
-    const genero = req.body.genero;
-    const data_nascimento = req.body.data_nascimento;
-    const pais = req.body.pais;
+
 
     const artista = await repo.excluirArtista(id)
 
