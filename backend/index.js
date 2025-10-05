@@ -5,36 +5,24 @@ const API = 'http://localhost:3000/artistas';
 em um rótulo legível para mostrar na tela (ex.: “Periféricos”, “Hardware”).
 */
 function categoriaLabel(valor) {
-  const map = { nome: 'Nome', hardware: 'Hardware', acessorios: 'Acessórios', outros: 'Outros' };
+  const map = { nome: 'Nome', genero: 'Gênero', data_nascimento: 'Data de Nascimento', pais: 'País' };
   return map[valor] ?? valor ?? '';
 }
 
+//Formatar a data retornada do DB para DD/MM/AAAA
 function converterParaVisualizacao(data_bd) {
-    if (!data_bd) return '';
-    
-    // 1. Remove a parte do tempo ('T00:00:00.000Z'), deixando apenas a data (AAAA-MM-DD)
-    const dataPart = data_bd.split('T')[0];
-    
-    // 2. Divide a string AAAA-MM-DD em partes
-    const [ano, mes, dia] = dataPart.split('-');
-    
-    // 3. Retorna no formato DD/MM/AAAA
-    return `${dia}/${mes}/${ano}`; 
+  if (!data_bd) return '';
+  const dataPart = data_bd.split('T')[0];
+  const [ano, mes, dia] = dataPart.split('-');
+  return `${dia}/${mes}/${ano}`; 
 }
 
-/*Objetivo: Carrega na tabela todos os produtos encontrados.
-  Se não houver produtos, exibir mensagem
-*/
 async function carregarArtistas() {
   const tbody = document.querySelector('#gridArtistas tbody');
   const listaVazia = document.getElementById('listaVazia');
   tbody.innerHTML = '';
   try {
-    
-    // Chama o Serviço REST Listar Produtos    
     const resp = await fetch(API);
-    
-    // recuperar o json do response e jogá-lo em uma lista de objetos (Produto) em JavaScript
     const listaArtistas = await resp.json();
 
     if (!listaArtistas || listaArtistas.length === 0) {
@@ -75,19 +63,16 @@ async function carregarArtistas() {
       if (confirm('Deseja realmente excluir este produto?')) {
         console.log(`deletar`)
         try {
-            // const resp = await fetch(`${API}/${id}`);
             const resp = await fetch(`${API}/${id}`, {
-                method: 'DELETE' // Indica que é uma requisição DELETE
+                method: 'DELETE' 
             });
 
-            if (resp.ok) { // Verifica se a requisição foi bem-sucedida (status 200-299)
+            if (resp.ok) { 
                 showToast('Artista excluído com sucesso.', 'success');
-                // Recarrega a lista para atualizar a tabela
                 carregarArtistas(); 
             } else if (resp.status === 404) {
                 showToast('Artista não encontrado.', 'warning');
             } else {
-                // Tenta ler a mensagem de erro do servidor
                 const errorData = await resp.json().catch(() => ({}));
                 const errorMessage = errorData.error || 'Erro ao excluir artista.';
                 showToast(errorMessage, 'danger');

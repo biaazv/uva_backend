@@ -1,7 +1,6 @@
 const { Artista } = require('../models');
 
 //CRUD
-
 //Create
 const salvarArtista = async (nome, genero,data_nascimento, pais) => {
     const artista = await Artista.create({
@@ -18,18 +17,6 @@ const obterArtista = async() => {
 }
 
 //Read por Id
-// const obterArtistaPorId = async(id) => {
-//     const artista = await Artista.findByPk(id);
-
-//     if (!artista){
-//         return null
-//     }
-
-//     return await Artista.findAll({
-//         attributes:['id','nome','genero','data_nascimento','pais', 'createdAt', 'updatedAt']
-//     })    
-// }
-
 const obterArtistaPorId = async(id) => {
     return await Artista.findByPk(id, {
         attributes:['id','nome','genero','data_nascimento','pais', 'createdAt', 'updatedAt']
@@ -41,7 +28,7 @@ const atualizarArtista = async (id, nome, genero, data_nascimento, pais) => {
   const artista = await Artista.findByPk(id);
 
   if (!artista) {
-    return null; // não achou artista com esse id
+    return null; 
   }
 
   artista.nome = nome;

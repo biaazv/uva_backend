@@ -3,23 +3,17 @@ const API = 'http://localhost:3000/artistas';
 const u = new URLSearchParams(location.search);
 const id = u.get('id');
 
-/*Objetivo: Converter o código da categoria salvo no banco (ex.: perifericos, hardware)
-em um rótulo legível para mostrar na tela (ex.: “Periféricos”, “Hardware”).
-*/
 function categoriaLabel(valor) {
   const map = { nome: 'Nome', genero: 'Gênero Musical', data: 'Data de Nascimento', pais: 'País' };
   return map[valor] ?? valor ?? '';
 }
 
-/*Objetivo: Consultar os detalhes de um produto pelo seu ID
-*/
 async function consultarDetalhesProduto() {
   if (!id) {
     showToast('ID inválido.', 'danger');
     return;
   }
   try {
-    //Acionar o serviço REST consultar produto por ID
     const resp = await fetch(`${API}/${id}`);
     if (!resp.ok) {
       showToast('Artista não encontrado.', 'danger');

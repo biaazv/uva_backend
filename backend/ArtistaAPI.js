@@ -46,12 +46,11 @@ app.get('/artistas/:id', async (req, res) => {
 //Update
 app.put('/artistas/:id', async (req, res) => {
   try {
-    const id = req.params.id; // pega o id da URL
+    const id = req.params.id; 
     const nome = req.body.nome;
     const genero = req.body.genero;
     const data_nascimento = req.body.data_nascimento;
     const pais = req.body.pais;
-
     const artista = await repo.atualizarArtista(id, nome, genero, data_nascimento, pais);
 
     if (!artista) {
@@ -68,7 +67,7 @@ app.put('/artistas/:id', async (req, res) => {
 
 //Delete
 app.delete('/artistas/:id', async (req, res) => {
-    const id = req.params.id; //pega o id da URL
+    const id = req.params.id; 
     const artista = await repo.excluirArtista(id)
     res.status(200).json('Artista deletado');
     res.end()

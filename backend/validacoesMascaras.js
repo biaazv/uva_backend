@@ -26,26 +26,8 @@ function campoVazio(value) {
   return !value || String(value).trim() === '';
 }
 
-// Função para formatar o valor de preço para validação
-// function formatarPrecoParaValidacao(valor) {
-//   return valor.replace(/\./g, '').replace(',', '.');
-// }
 
 // =================== Funções de Máscara ===================
-
-// function mascaraCNPJ(valor) {
-//   return valor.replace(/\D/g, '').replace(/^(\d{2})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/\.(\d{3})(\d)/, '.$1/$2').replace(/(\d{4})(\d)/, '$1-$2').replace(/(-\d{2})\d+?$/, '$1');
-// }
-
-// function mascaraPreco(valor) {
-//   valor = valor.replace(/\D/g, ''); // mantém apenas dígitos
-//   if (valor.length > 2) {
-//     valor = valor.replace(/(\d)(\d{2})$/, '$1,$2'); 
-//     // aplica pontos de milhar a cada grupo de 3 dígitos antes da vírgula
-//     valor = valor.replace(/(?=(\d{3})+(,))/g, '.');
-//   }
-//   return valor;
-// }
 
 function mascaraData(valor) {
   return valor
@@ -65,28 +47,14 @@ function validarFormularioHtml(e) {
   const nome = document.getElementById('nome');
   const errNome = document.getElementById('err-nome');
 
-  // const cnpj = document.getElementById('cnpj');
-  // const errCnpj = document.getElementById('err-cnpj');
-
   const genero = document.getElementById('genero');
   const errGenero = document.getElementById('err-genero');
 
-  // const preco = document.getElementById('preco');
-  // const errPreco = document.getElementById('err-preco');
-
-  // const quantidade = document.getElementById('quantidade');
-  // const errQuantidade = document.getElementById('err-quantidade');
-
   const data = document.getElementById('data');
   const errData = document.getElementById('err-data');
-  
-  
 
   const pais = document.getElementById('pais');
   const errPais = document.getElementById('err-pais');
-
-  // const statusRadios = document.querySelectorAll('input[name="status"]');
-  // const errStatus = document.getElementById('err-status');
 
   const termos = document.getElementById('termos');
   const errTermos = document.getElementById('err-termos');
@@ -102,13 +70,6 @@ function validarFormularioHtml(e) {
     limparErro(nome, errNome);
   }
 
-  // // Validação do CNPJ
-  // if (campoVazio(cnpj.value) || cnpj.value.length !== 18) {
-  //   setarErro(cnpj, errCnpj, 'Informe um CNPJ válido.');
-  //   temErro = true;
-  // } else {
-  //   limparErro(cnpj, errCnpj);
-  // }
 
   
   if (campoVazio(genero.value)) {
@@ -117,23 +78,6 @@ function validarFormularioHtml(e) {
   } else {
     limparErro(genero, errGenero);
   }
-
-  // // Preço: formata e valida
-  // const precoVal = parseFloat(formatarPrecoParaValidacao(preco.value));
-  // if (isNaN(precoVal) || precoVal <= 0) {
-  //   setarErro(preco, errPreco, 'Informe um preço válido (> 0).');
-  //   temErro = true;
-  // } else {
-  //   limparErro(preco, errPreco);
-  // }
-
-  // const qtdVal = parseInt(quantidade.value, 10);
-  // if (isNaN(qtdVal) || qtdVal <= 0) {
-  //   setarErro(quantidade, errQuantidade, 'Informe uma quantidade válida (> 0).');
-  //   temErro = true;
-  // } else {
-  //   limparErro(quantidade, errQuantidade);
-  // }
 
   // Data: valida o formato e a data
   const dataPreenchida = data_nascimento.value;
@@ -165,21 +109,6 @@ function validarFormularioHtml(e) {
     limparErro(pais, errPais);
   }
 
-  // if (campoVazio(descricao.value) || descricao.value.trim().length < 10) {
-  //   setarErro(descricao, errDescricao, 'Descreva o produto (mín. 10 caracteres - sem contar espaços).');
-  //   temErro = true;
-  // } else {
-  //   limparErro(descricao, errDescricao);
-  // }
-
-  // const statusSelecionado = Array.from(statusRadios).some(r => r.checked);
-  // if (!statusSelecionado) {
-  //   setarErro(statusRadios[0], errStatus, 'Selecione o status do produto.');
-  //   temErro = true;
-  // } else {
-  //   limparErro(statusRadios[0], errStatus);
-  // }
-
   if (!termos.checked) {
     setarErro(termos, errTermos, 'É necessário confirmar as informações.');
     temErro = true;
@@ -188,11 +117,6 @@ function validarFormularioHtml(e) {
   }
 
   if (!temErro) {
-    
-    /* NOVIDADE DESSA AULA DE ACIONAMENTO DE API - ANTES AQUI TINHA APENAS UM ALERT COM UMA MENSAGEM */
-    
-    /* cria evento */
-    
     const evt = new CustomEvent('form:valido', { detail: { form } });
     form.dispatchEvent(evt);
     /*################################################################################################ */
@@ -234,13 +158,8 @@ function incluirValidacaoOnBlur() {
       const ok = regrasDoOnBlur[id](input.value);
       if (!ok) {
         const msgs = {
-          nome: 'Informe o nome do produto.',
-          cnpj: 'Informe um CNPJ válido.',          
-          categoria: 'Selecione uma categoria.',
-          preco: 'Preço deve ser > 0.',
-          quantidade: 'Quantidade deve ser > 0.',
+          nome: 'Informe o nome do Artista.',
           data: 'Data no formato DD/MM/AAAA (não pode ser futura).',
-          descricao: 'Mínimo de 10 caracteres.'
         };
         setarErro(input, errSpan, msgs[id]);
       } else {
